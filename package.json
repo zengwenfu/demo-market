@@ -1,0 +1,39 @@
+{
+  "name": "demo-market",
+  "version": "1.0.0",
+  "description": "demo market",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack --watch --config build/webpack.config.js --hide-modules",
+    "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js --optimize-minimize --progress",
+    "serve": "browser-sync start --server --files 'app.html'"
+  },
+  "keywords": [
+    "demo",
+    "market"
+  ],
+  "author": "xiaochong",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "browser-sync": "^2.18.13",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.5",
+    "eslint": "^4.5.0",
+    "eslint-config-vue": "^2.0.2",
+    "eslint-plugin-vue": "^2.1.0",
+    "vue": "^2.4.2",
+    "vue-loader": "^13.0.4",
+    "vue-template-compiler": "^2.4.2",
+    "vuex": "^2.3.1",
+    "webpack": "^3.5.5"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0"
+  }
+}
