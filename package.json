@@ -27,7 +27,7 @@
     "eslint": "^4.5.0",
     "eslint-config-vue": "^2.0.2",
     "eslint-plugin-vue": "^2.1.0",
-    "husky": "^0.14.3", 
+    "husky": "^0.14.3",
     "stylelint": "^8.0.0",
     "vue": "^2.4.2",
     "vue-loader": "^13.0.4",
