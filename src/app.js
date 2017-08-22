@@ -18,5 +18,5 @@ const store = new Vuex.Store({
     }
 });
 
-var Vue = window.Vue || {};
+const Vue = window.Vue || {};
 new Vue(Vue.util.extend({ el: '#root', store }, App));
