@@ -1,14 +1,14 @@
 <template>
-	<div>
-		<p>hello world!!!</p>
-		<p>{{ prop }}</p>
-		<p>{{ key }}</p>
-		<p>{{ ckey }}</p>
-		<div>
-			<p>{{ message }}</p>
-			<div @click="onButtonClick" class="button">修改 message</div>
-		</div>
-	</div>
+    <div>
+        <p>hello world!!!</p>
+        <p>{{ prop }}</p>
+        <p>{{ key }}</p>
+        <p>{{ ckey }}</p>
+        <div>
+            <p>{{ message }}</p>
+            <div @click="onButtonClick" class="button">修改 message</div>
+        </div>
+    </div>
 </template>
 <script>
 
@@ -50,13 +50,14 @@ export default {
 };
 
 </script>
+
 <style>
-	.button {
-		width: 200px;
-		height: 30px;
-		line-height: 30px;
-		text-align: center;
-		background: #CCCCCC;
-		border-radius: 15px;
-	}
+.button {
+    width: 200px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background: #ccc;
+    border-radius: 15px;
+}
 </style>
