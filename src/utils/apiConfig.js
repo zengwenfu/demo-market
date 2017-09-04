@@ -1,4 +1,4 @@
-const host = 'http://localhost:5001';
+const host = 'http://we.facemagic888.com';
 const concatUrl = (url) => `${host}${url}`;
 
 export default {
