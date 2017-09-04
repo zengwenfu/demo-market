@@ -44,5 +44,12 @@
 4. 对于异步操作，采取最新的 es7 规范 async/await（拥抱新变化），参看 `store/actions/app.js `
 5. 所有的 url 请求链接需要定义在 utils/apiConfig 下，便于统一管理
 6. 接口请求已经通过 request.js 封装
+7. 本地测试需要用跨域的方式打开 chrome, mac 下使用命令
+```
+open -n /Applications/Google\ Chrome.app/ --args --disable-web-security  --user-data-dir=/Users/[yourname]/Documents/MyChromeDevUserData 
+
+[yourname] 换成你的电脑名
+
+```
 
 
