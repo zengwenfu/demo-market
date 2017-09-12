@@ -7,7 +7,8 @@ module.exports = {
     "extends": ["eslint:recommended", "vue"],
     "plugins": ["vue"],
     "parserOptions": {
-        "sourceType": "module"
+        "sourceType": "module",
+        "ecmaVersion": "2017"
     },
     "rules": {
         "indent": [
