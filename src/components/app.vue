@@ -1,23 +1,28 @@
 <template>
     <div>
-        <p>hello world!!!</p>
-        <p>{{ prop }}</p>
-        <p>{{ key }}</p>
-        <p>{{ ckey }}</p>
-        <div>
+        <titleBar></titleBar>
+        <div class="inner demo">
+            <p>hello world!!!</p>
+            <p>{{ prop }}</p>
+            <p>{{ key }}</p>
+            <p>{{ ckey }}</p>
+            <div>
             <p>{{ message }}</p>
             <div @click="onButtonClick" class="button">修改 message</div>
+        </div>
         </div>
     </div>
 </template>
 <script>
 
 import { mapState } from 'vuex';
+import TitleBar from './titlebar/main-titlebar';
+
 let i = 1;
 const message = ['hello world', 'hello'];
 
 export default {
-    components: {},
+    components: { TitleBar },
     props: {
         prop: {
             type: String,
@@ -51,7 +56,12 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+
+.demo {
+    margin-top: 20px;
+}
+
 .button {
     width: 200px;
     height: 30px;

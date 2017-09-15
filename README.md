@@ -51,5 +51,7 @@ open -n /Applications/Google\ Chrome.app/ --args --disable-web-security  --user-
 [yourname] 换成你的电脑名
 
 ```
+8. 公共的样式提取到 common.css，组件内样式使用 `<style scoped></style>` 相互隔离（注意根组件独立 class 不要重名）
+9. 主内容使用 .inner 样式类，960px 居中显示，flex 布局使用 .flex-container
 
 
