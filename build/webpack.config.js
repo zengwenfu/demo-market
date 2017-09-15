@@ -1,27 +1,27 @@
-const path = require('path')
-const fs = require('fs')
+const path = require('path');
+const fs = require('fs');
 
-const isProd = process.env.NODE_ENV === 'production'
+const isProd = process.env.NODE_ENV === 'production';
 
 // 多页面 bundle
-function getEntries() {
-    const entries = {}
-    const dir = path.join(__dirname, '../src')
+function getEntries () {
+    const entries = {};
+    const dir = path.join(__dirname, '../src');
     fs.readdirSync(dir).forEach((file) => {
-        const fullPath = path.join(dir, file)
-        const stat = fs.statSync(fullPath)
-        const extname = path.extname(fullPath)
-        const basename = path.basename(file)
+        const fullPath = path.join(dir, file);
+        const stat = fs.statSync(fullPath);
+        const extname = path.extname(fullPath);
+        const basename = path.basename(file);
         if (stat.isFile() && extname === '.js') {
-          entries[basename] = fullPath
+            entries[basename] = fullPath;
         }
-    })
-    return entries
+    });
+    return entries;
 }
 
-const entries = getEntries()
+const entries = getEntries();
 
-const config =  {
+const config = {
     entry: entries,
     output: {
         path: path.resolve(__dirname, '../dist'),
@@ -44,15 +44,16 @@ const config =  {
             test: /\.js$/,
             loader: 'babel-loader',
             exclude: /node_modules/
+        }, {
+            test: /\.css$/,
+            use: ['style-loader', 'css-loader']
         }]
     }
-}
-
+};
 
 // 开发环境使用 source-map
 if (!isProd) {
-  config.devtool = 'source-map'
+    config.devtool = 'source-map';
 }
 
-
-module.exports = config
+module.exports = config;
