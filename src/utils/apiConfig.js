@@ -1,4 +1,4 @@
-const host = 'http://we.facemagic888.com';
+const host = 'https://dm.facemagic888.com';
 const concatUrl = (url) => `${host}${url}`;
 
 export default {
