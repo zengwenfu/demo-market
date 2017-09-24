@@ -30,6 +30,7 @@
     "eslint": "^4.5.0",
     "eslint-config-vue": "^2.0.2",
     "eslint-plugin-vue": "^2.1.0",
+    "file-loader": "^0.11.2",
     "husky": "^0.14.3",
     "style-loader": "^0.18.2",
     "stylelint": "^8.0.0",
