@@ -18,7 +18,7 @@
                         </div>
                     </div>
                     <div class="pagination-wrap">
-
+                        <pagination :pageNumber="pageNumber"></pagination>
                     </div>
                 </div>
                 <div class="sidebar">
@@ -31,13 +31,15 @@
 <script>
 
 import titleBar from '../titlebar/main-titlebar';
+import pagination from '../pagination/pagination';
 import { mapState } from 'vuex';
 let i = 1;
 const message = ['hello world', 'hello'];
 
 export default {
     components: {
-        titleBar
+        titleBar,
+        pagination
     },
     data () {
         return {
@@ -66,7 +68,8 @@ export default {
                     description: '使用RN实现自定义视图的一个例子',
                     downLoadCount: '20'
                 }
-            ]
+            ],
+            pageNumber: 8
         };
     },
     computed: {
@@ -154,5 +157,10 @@ export default {
         top: 15px;
         right: 50px;
         font-size: 13px;
+    }
+
+    .pagination-wrap {
+        width: 80%;
+        margin: 20px auto;
     }
 </style>
