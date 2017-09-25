@@ -46,8 +46,12 @@
                         this.preEllip = false;
                         this.nextEllip = true;
                         return [2, 3];
-                    } else if (this.curPage > 2) {
+                    } else if (this.curPage <= 3) {
                         this.preEllip = false;
+                        this.nextEllip = false;
+                        return [2, 3, 4];
+                    } else if (this.curPage <= 4) {
+                        this.preEllip = true;
                         this.nextEllip = false;
                         return [2, 3, 4];
                     }
@@ -56,6 +60,10 @@
                         this.preEllip = false;
                         this.nextEllip = true;
                         return [2, 3];
+                    } else if (this.curPage <= 3) {
+                        this.preEllip = false;
+                        this.nextEllip = true;
+                        return [this.curPage - 1, this.curPage, this.curPage + 1];
                     } else if (this.curPage <= this.pageNumber - 3) {
                         this.preEllip = true;
                         this.nextEllip = true;
@@ -74,6 +82,12 @@
                 }
             }
         },
+        watch: {
+            curPage: function (val) {
+                // console.log('请求' + val + '页数据');
+                // 此处添加请求数据的逻辑
+            }
+        },
         methods: {
             goPage: function (pageIndex) {
                 if (pageIndex === this.curPage) return;
@@ -82,13 +96,11 @@
             goPrePage: function () {
                 if (this.curPage > 1) {
                     this.curPage--;
-                    this.goPage(this.curPage);
                 }
             },
             goNextPage: function () {
                 if (this.curPage < this.pageNumber) {
                     this.curPage++;
-                    this.goPage(this.curPage);
                 }
             },
             goFirstPage: function () {
