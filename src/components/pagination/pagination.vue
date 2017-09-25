@@ -3,12 +3,12 @@
         <ul class="pagination">
             <li v-show="curPage !== 1 " @click="goPrePage"><p>上一页</p></li>
             <li @click="goFirstPage" :class="{'active':curPage == 1}"><p>1</p></li>
-            <li v-show="preEllip"><p>...</p></li>
+            <li v-show="preEllip" @click="goPreEllipPage"><p>...</p></li>
             <li v-for="pageIndex in middlePages" @click="goPage(pageIndex)" :class="{'active':curPage == pageIndex}"
                 :key="pageIndex">
                 <p>{{pageIndex}}</p>
             </li>
-            <li v-show="nextEllip"><p>...</p></li>
+            <li v-show="nextEllip" @click="goNextEllipPage"><p>...</p></li>
             <li v-show="pageNumber > 1" @click="goLastPage" :class="{'active':curPage == pageNumber}"><p>
                 {{pageNumber}}</p></li>
             <li v-show="pageNumber !== curPage" @click="goNextPage"><p>下一页</p></li>
@@ -90,7 +90,7 @@
         },
         methods: {
             goPage: function (pageIndex) {
-                if (pageIndex === this.curPage) return;
+                // if (pageIndex === this.curPage) return;
                 this.curPage = pageIndex;
             },
             goPrePage: function () {
@@ -103,15 +103,31 @@
                     this.curPage++;
                 }
             },
-            goFirstPage: function () {
-                if (this.curPage !== 1) {
-                    this.goPage(1);
+            goPreEllipPage: function () {
+                if (this.curPage > 4) {
+                    this.curPage = this.curPage - 3;
+                } else if (this.curPage > 3) {
+                    this.curPage = this.curPage - 2;
                 }
             },
-            goLastPage: function () {
-                if (this.curPage !== this.pageNumber) {
-                    this.goPage(this.pageNumber);
+            goNextEllipPage: function () {
+                if (this.curPage < this.pageNumber - 3) {
+                    this.curPage = this.curPage + 3;
+                } else if (this.curPage < this.pageNumber - 2) {
+                    this.curPage = this.curPage + 2;
                 }
+            },
+            goFirstPage: function () {
+                // if (this.curPage !== 1) {
+                // this.goPage(1);
+                // }
+                this.curPage = 1;
+            },
+            goLastPage: function () {
+                // if (this.curPage !== this.pageNumber) {
+                // this.goPage(this.pageNumber);
+                // }
+                this.curPage = this.pageNumber;
             }
         }
     };

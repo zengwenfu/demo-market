@@ -69,7 +69,7 @@ export default {
                     downLoadCount: '20'
                 }
             ],
-            pageNumber: 8
+            pageNumber: 12
         };
     },
     computed: {
