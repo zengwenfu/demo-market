@@ -48,87 +48,78 @@
 </script>
 
 <style scoped>
-    body,
-    h1,
-    h2,
-    a,
-    img,
-    ul,
-    li,
-    input,
-    form {
-        margin: 0;
-        padding: 0;
-    }
+body,
+h1,
+h2,
+a,
+img,
+ul,
+li,
+input,
+form {
+    margin: 0;
+    padding: 0;
+}
+a {
+    text-decoration: none;
+}
+input,
+button {
+    outline: none;
+    border: none;
+}
 
-    a {
-        text-decoration: none;
-    }
-
-    input,
-    button {
-        outline: none;
-        border: none;
-    }
-
-    ul {
-        list-style: none;
-    }
-    .container {
-        position: relative;
-        height: 280px;
-        padding-top: 45px;
-        background-color: #007fff;
-    }
-
-    .logo {
-        position: absolute;
-        left: 90px;
-    }
-
-    .logo a {
-        color: #fff;
-        line-height: 60px;
-        font-size: 30px; 
-    }
-
-    .register {
-        width: 425px;
-        padding: 37px 60px;
-        border: 1px solid #fff;
-        border-radius: 6px;
-        background-color: #fff;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-        box-shadow: 0 0 4px rgba(0, 0, 0, .4);
-        margin: 0 auto;
-    }
-
-    .register-title {
-        padding-bottom: 20px;
-        font-size: 20px;
-    }
-
-    .register-box ul li {
-        height: 40px;
-        line-height: 40px;
-        border-bottom: 1px solid #e6e6e6;
-    }
-
-    .register-btn button {
-        display: block;
-        width: 100%;
-        height: 40px;
-        background: #007fff;
-        border-radius: 10px;
-        cursor: pointer;
-        margin-top: 20px;
-    }
-
-    .login-if a {
-        display: block;
-        margin-top: 20px;
-        text-align: center;
-        color: #007fff;
-    }
+ul {
+    list-style: none;
+}
+.container {
+    position: relative;
+    height: 280px;
+    padding-top: 45px;
+    background-color: #007fff;
+}
+.logo {
+    position: absolute;
+    left: 90px;
+}
+.logo a {
+    color: #fff;
+    line-height: 60px;
+    font-size: 30px;
+}
+.register {
+    width: 425px;
+    padding: 37px 60px;
+    border: 1px solid #fff;
+    border-radius: 6px;
+    background-color: #fff;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.4);
+    margin: 0 auto;
+}
+.register-title {
+    padding-bottom: 20px;
+    font-size: 20px;
+}
+.register-box ul li {
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 1px solid #e6e6e6;
+}
+.register-btn button {
+    display: block;
+    width: 100%;
+    height: 40px;
+    background: #007fff;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.login-if a {
+    display: block;
+    margin-top: 20px;
+    text-align: center;
+    color: #007fff;
+}
 </style>
