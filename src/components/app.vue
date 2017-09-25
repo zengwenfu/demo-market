@@ -9,7 +9,7 @@
             <div>
             <p>{{ message }}</p>
             <div @click="onButtonClick" class="button">修改 message</div>
-        </div>
+            </div>
         </div>
     </div>
 </template>
