@@ -17,7 +17,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="pagination-wrap">
+                    <div class="pagination-wrap flex-container flex-direction-row">
                         <pagination :pageNumber="pageNumber"></pagination>
                     </div>
                 </div>
@@ -69,7 +69,7 @@ export default {
                     downLoadCount: '20'
                 }
             ],
-            pageNumber: 8
+            pageNumber: 12
         };
     },
     computed: {
@@ -160,7 +160,8 @@ export default {
     }
 
     .pagination-wrap {
-        width: 80%;
-        margin: 20px auto;
+        margin: 20px 5px;
+        align-items: center;
+        justify-content: center;
     }
 </style>

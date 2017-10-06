@@ -3,12 +3,12 @@
         <ul class="pagination">
             <li v-show="curPage !== 1 " @click="goPrePage"><p>上一页</p></li>
             <li @click="goFirstPage" :class="{'active':curPage == 1}"><p>1</p></li>
-            <li v-show="preEllip"><p>...</p></li>
+            <li v-show="preEllip" @click="goPreEllipPage"><p>...</p></li>
             <li v-for="pageIndex in middlePages" @click="goPage(pageIndex)" :class="{'active':curPage == pageIndex}"
                 :key="pageIndex">
                 <p>{{pageIndex}}</p>
             </li>
-            <li v-show="nextEllip"><p>...</p></li>
+            <li v-show="nextEllip" @click="goNextEllipPage"><p>...</p></li>
             <li v-show="pageNumber > 1" @click="goLastPage" :class="{'active':curPage == pageNumber}"><p>
                 {{pageNumber}}</p></li>
             <li v-show="pageNumber !== curPage" @click="goNextPage"><p>下一页</p></li>
@@ -46,8 +46,12 @@
                         this.preEllip = false;
                         this.nextEllip = true;
                         return [2, 3];
-                    } else if (this.curPage > 2) {
+                    } else if (this.curPage <= 3) {
                         this.preEllip = false;
+                        this.nextEllip = false;
+                        return [2, 3, 4];
+                    } else if (this.curPage <= 4) {
+                        this.preEllip = true;
                         this.nextEllip = false;
                         return [2, 3, 4];
                     }
@@ -56,6 +60,10 @@
                         this.preEllip = false;
                         this.nextEllip = true;
                         return [2, 3];
+                    } else if (this.curPage <= 3) {
+                        this.preEllip = false;
+                        this.nextEllip = true;
+                        return [this.curPage - 1, this.curPage, this.curPage + 1];
                     } else if (this.curPage <= this.pageNumber - 3) {
                         this.preEllip = true;
                         this.nextEllip = true;
@@ -74,32 +82,52 @@
                 }
             }
         },
+        watch: {
+            curPage: function (val) {
+                // console.log('请求' + val + '页数据');
+                // 此处添加请求数据的逻辑
+            }
+        },
         methods: {
             goPage: function (pageIndex) {
-                if (pageIndex === this.curPage) return;
+                // if (pageIndex === this.curPage) return;
                 this.curPage = pageIndex;
             },
             goPrePage: function () {
                 if (this.curPage > 1) {
                     this.curPage--;
-                    this.goPage(this.curPage);
                 }
             },
             goNextPage: function () {
                 if (this.curPage < this.pageNumber) {
                     this.curPage++;
-                    this.goPage(this.curPage);
+                }
+            },
+            goPreEllipPage: function () {
+                if (this.curPage > 4) {
+                    this.curPage = this.curPage - 3;
+                } else if (this.curPage > 3) {
+                    this.curPage = this.curPage - 2;
+                }
+            },
+            goNextEllipPage: function () {
+                if (this.curPage < this.pageNumber - 3) {
+                    this.curPage = this.curPage + 3;
+                } else if (this.curPage < this.pageNumber - 2) {
+                    this.curPage = this.curPage + 2;
                 }
             },
             goFirstPage: function () {
-                if (this.curPage !== 1) {
-                    this.goPage(1);
-                }
+                // if (this.curPage !== 1) {
+                // this.goPage(1);
+                // }
+                this.curPage = 1;
             },
             goLastPage: function () {
-                if (this.curPage !== this.pageNumber) {
-                    this.goPage(this.pageNumber);
-                }
+                // if (this.curPage !== this.pageNumber) {
+                // this.goPage(this.pageNumber);
+                // }
+                this.curPage = this.pageNumber;
             }
         }
     };
