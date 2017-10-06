@@ -2,16 +2,16 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>demo-market</title>
+  <title>菲麦前端--demo-market</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-touch-fullscreen" content="yes">
   <meta name="format-detection" content="telephone=no, email=no">
-  <script src="./node_modules/vue/dist/vue.runtime.js"></script>
+  <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
 </head>
 <body>
   <div id="root"></div>
-  <script src="./dist/home.js"></script>
+  <script src="{{ bundleUrl }}"></script>
 </body>
 </html>

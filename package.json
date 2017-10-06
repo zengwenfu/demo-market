@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --watch --config build/webpack.config.js --hide-modules",
     "build": "cross-env NODE_ENV=production webpack --config build/webpack.config.js --optimize-minimize --progress",
-    "serve": "browser-sync start --server --files 'app.html'",
+    "serve": "browser-sync start --server --files './dist/app.html'",
     "lint:js": "eslint --ext .js,.vue src/",
     "lint:css": "stylelint \"**/*.vue\"",
     "precommit": "npm run lint:js && npm run lint:css"
@@ -32,6 +32,7 @@
     "eslint-plugin-vue": "^2.1.0",
     "file-loader": "^0.11.2",
     "husky": "^0.14.3",
+    "nunjucks": "^3.0.1",
     "style-loader": "^0.18.2",
     "stylelint": "^8.0.0",
     "stylelint-config-standard": "^17.0.0",

@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const buildHtml = require('./buildHtml.js')
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -13,6 +14,8 @@ function getEntries () {
         const extname = path.extname(fullPath);
         const basename = path.basename(file);
         if (stat.isFile() && extname === '.js') {
+            // 创建 html
+            buildHtml(path.resolve(__dirname, '../dist'), basename.replace('.js', ''));
             entries[basename] = fullPath;
         }
     });
