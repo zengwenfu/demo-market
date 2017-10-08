@@ -7,7 +7,7 @@
                     <div class="list-wrap">
                         <div class="list-item" v-for="item in list">
                             <div class="img-content">
-                                <img :src="require('../../assets/img/001.jpg')" alt="">
+                                <img :src="require('../../assets/img/' + item.imgName + '.jpg')" alt="">
                             </div>
                             <h4>{{item.title}}</h4>
                             <p>{{item.keyWord}}</p>
@@ -34,8 +34,6 @@
 import titleBar from '../titlebar/main-titlebar';
 import pagination from '../pagination/pagination';
 import { mapState } from 'vuex';
-let i = 1;
-const message = ['hello world', 'hello'];
 
 export default {
     components: {
@@ -44,50 +42,21 @@ export default {
     },
     data () {
         return {
-            list: [
-                {
-                    title: 'Reactive Native',
-                    keyWord: '技术：Object-C',
-                    description: '使用RN实现自定义视图的一个例子',
-                    downLoadCount: '20'
-                },
-                {
-                    title: 'Reactive Native',
-                    keyWord: '技术：Object-C',
-                    description: '使用RN实现自定义视图的一个例子',
-                    downLoadCount: '20'
-                },
-                {
-                    title: 'Reactive Native',
-                    keyWord: '技术：Object-C',
-                    description: '使用RN实现自定义视图的一个例子',
-                    downLoadCount: '20'
-                },
-                {
-                    title: 'Reactive Native',
-                    keyWord: '技术：Object-C',
-                    description: '使用RN实现自定义视图的一个例子',
-                    downLoadCount: '20'
-                }
-            ],
             pageNumber: 12
         };
     },
     computed: {
         ...mapState({
-            message: state => state.appState.message
+            list: state => state.homeState.list
         }),
         ckey () {
             return this.key + 'yeah';
         }
     },
     methods: {
-        onButtonClick () {
-            i = i === 0 ? 1 : 0;
-            this.$store.dispatch('initStatus', message[i]);
-        }
     },
     created () {
+        this.$store.dispatch('queryHomeList');
     },
     mounted () {
     }
