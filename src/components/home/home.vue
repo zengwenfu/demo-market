@@ -7,6 +7,7 @@
                     <div class="list-wrap">
                         <div class="list-item" v-for="item in list">
                             <div class="img-content">
+                                <img :src="require('../../assets/img/001.jpg')" alt="">
                             </div>
                             <h4>{{item.title}}</h4>
                             <p>{{item.keyWord}}</p>
@@ -110,22 +111,28 @@ export default {
 
     .main-content-wrap {
         flex: 6;
-        padding: 0 10px;
     }
 
     .sidebar {
         flex: 2;
         height: 200px;
-        padding: 0 15px;
+        margin-left: 15px;
         background: #000;
     }
 
     .list-item {
         background: #fff;
         position: relative;
-        height: 160px;
-        margin-top: 10px;
+        height: 140px;
+        margin-top: 15px;
         padding: 20px 0 0 230px;
+        cursor: pointer;
+    }
+
+    .list-item:hover {
+        -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     }
 
     .list-wrap > .list-item:first-child {
@@ -136,7 +143,8 @@ export default {
         position: absolute;
         width: 200px;
         height: 132px;
-        background: url('../../assets/img/001.jpg') no-repeat;
+
+        /* background: url('../../assets/img/001.jpg') no-repeat; */
         left: 10px;
         top: 14px;
     }
