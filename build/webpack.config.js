@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const buildHtml = require('./buildHtml.js')
+const buildHtml = require('./buildHtml.js');
 
 const isProd = process.env.NODE_ENV === 'production';
 
