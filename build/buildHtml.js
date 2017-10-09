@@ -6,10 +6,9 @@ const fs = require('fs');
  * @param root 保存的路径
  * @param content 文件内容
  */
-function createFile(root, content) {
+function createFile (root, content) {
     var pathArr = root.split('/');
     var dirPath = pathArr.slice(0, pathArr.length);
-    var fileName = pathArr.slice(pathArr.length);
     for (var i = 0; i < dirPath.length; i++) {
         var p = path.resolve(dirPath.slice(0, i).join('/'));
         if (dirPath[i] && !fs.existsSync(p)) {
@@ -17,12 +16,12 @@ function createFile(root, content) {
         }
     }
     fs.writeFileSync(path.resolve(root), content, {});
-};
+}
 
 module.exports = function (target, bundleName) {
-	var htmlTemplate = new nunjucks.Environment(new nunjucks.FileSystemLoader(path.resolve(__dirname)))
+    var htmlTemplate = new nunjucks.Environment(new nunjucks.FileSystemLoader(path.resolve(__dirname)));
     const content = htmlTemplate.render('view.tpl', {
         bundleUrl: `${bundleName}.js`
     });
-    createFile(`${target}/${bundleName}.html`, content)
+    createFile(`${target}/${bundleName}.html`, content);
 };
