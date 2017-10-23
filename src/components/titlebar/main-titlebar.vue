@@ -15,7 +15,7 @@
             <div class="main-title-left flex-container flex-direction-row">
 
                 <!--logo部分，定义logo文本颜色和大小-->
-                <div class="logo">FaceMagic</div>
+                <div class="logo"></div>
                 <!--导航栏部分，变为弹性盒子，定义对齐方式，定义宽度和左边距-->
                 <div class="nav flex-container flex-direction-row">
                     <p><a href="#" class="selected">Demos</a></p>
@@ -81,11 +81,14 @@
     }
 
     .logo {
-        color: #007fff;
-
+        /* color: #007fff; */
         /* 感觉这里line-height可以不需要，不影响效果。而且这个值如果超过了头部高度，还会对样式产生影响 */
-        line-height: 60px;
-        font-size: 30px;
+        /* line-height: 60px; */
+        /* font-size: 30px; */
+        width: 193px;
+        height: 60px;
+        background: transparent url(~assets/img/face.png) no-repeat;
+        background-size: cover;
     }
 
     .nav {
