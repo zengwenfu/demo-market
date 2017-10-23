@@ -1,6 +1,10 @@
 const path = require('path');
 const fs = require('fs');
-const buildHtml = require('./buildHtml.js')
+const buildHtml = require('./buildHtml.js');
+
+function resolve (dir) {
+    return path.join(__dirname, '..', dir)
+}
 
 const isProd = process.env.NODE_ENV === 'production';
 
@@ -33,7 +37,11 @@ const config = {
     },
     resolve: {
         extensions: ['.js', '.vue'],
-        modules: [path.resolve(__dirname, '../node_modules')]
+        modules: [path.resolve(__dirname, '../node_modules')],
+        alias: {
+            'assets': resolve('src/assets'),
+            'components': resolve('src/components')
+        }
     },
     module: {
         rules: [{
