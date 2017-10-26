@@ -1,7 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const buildHtml = require('./buildHtml.js');
-
 function resolve (dir) {
     return path.join(__dirname, '..', dir);
 }
@@ -27,7 +26,6 @@ function getEntries () {
 }
 
 const entries = getEntries();
-
 const config = {
     entry: entries,
     output: {
@@ -40,7 +38,8 @@ const config = {
         modules: [path.resolve(__dirname, '../node_modules')],
         alias: {
             'assets': resolve('src/assets'),
-            'components': resolve('src/components')
+            'components': resolve('src/components'),
+            'utils': resolve('src/utils')
         }
     },
     module: {
@@ -59,7 +58,10 @@ const config = {
             test: /\.css$/,
             use: ['style-loader', 'css-loader']
         }, {
-            test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
+            test: /\.less$/,
+            use: ['style-loader', 'css-loader', 'less-loader']
+        }, {
+            test: /\.(gif|jpg|png|woff|svg|eot|ttf)(\?.*)?$/,
             use: 'url-loader?limit=1024&name=[name].[ext]&outputPath=img/'
         }]
     }

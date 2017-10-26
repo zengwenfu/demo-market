@@ -9,8 +9,9 @@
 ## 编译运行
 1. npm install
 2. npm run dev 
-3. 打开另外一个终端 npm run serve
+3. 打开另外一个终端 npm run serve (需跨域启动 chrome) 或者运行 npm start (不需要 chrome 跨域模式)
 4. localhost:3000/app.html
+
 
 ## 目录说明
 ```
