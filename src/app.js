@@ -2,7 +2,7 @@
 import Vuex from 'vuex';
 
 import App from './components/app.vue';
-import './css/common.css';
+import './common';
 
 // 引入 module
 import appState from './store/modules/app';
