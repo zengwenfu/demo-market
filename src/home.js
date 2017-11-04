@@ -2,7 +2,6 @@
 import Vuex from 'vuex';
 
 import App from './components/home/home.vue';
-import './css/common.css';
 
 // 引入 module
 import homeState from './store/modules/home';

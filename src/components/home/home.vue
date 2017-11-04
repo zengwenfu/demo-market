@@ -1,6 +1,6 @@
 <template>
     <div>
-        <titleBar></titleBar>
+        <main-titlebar></main-titlebar>
         <div class=" home body-wrap wrap">
             <div class="body-inner inner flex-container flex-direction-row">
                 <div class="main-content-wrap">
@@ -31,13 +31,11 @@
 </template>
 <script>
 
-import titleBar from '../titlebar/main-titlebar';
 import pagination from '../pagination/pagination';
 import { mapState } from 'vuex';
 
 export default {
     components: {
-        titleBar,
         pagination
     },
     data () {

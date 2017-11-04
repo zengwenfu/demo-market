@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const buildHtml = require('./buildHtml.js');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 function resolve (dir) {
     return path.join(__dirname, '..', dir);
 }
@@ -18,7 +19,8 @@ function getEntries () {
         const basename = path.basename(file);
         if (stat.isFile() && extname === '.js') {
             // 创建 html
-            buildHtml(path.resolve(__dirname, '../dist'), basename.replace('.js', ''));
+            const name = basename.replace('.js', '');
+            name !== 'common' && buildHtml(path.resolve(__dirname, '../dist'), name);
             entries[basename] = fullPath;
         }
     });
@@ -39,7 +41,8 @@ const config = {
         alias: {
             'assets': resolve('src/assets'),
             'components': resolve('src/components'),
-            'utils': resolve('src/utils')
+            'utils': resolve('src/utils'),
+            'css': resolve('src/css')
         }
     },
     module: {
@@ -55,16 +58,19 @@ const config = {
             loader: 'babel-loader',
             exclude: /node_modules/
         }, {
-            test: /\.css$/,
-            use: ['style-loader', 'css-loader']
-        }, {
             test: /\.less$/,
-            use: ['style-loader', 'css-loader', 'less-loader']
+            use: ExtractTextPlugin.extract({
+                fallback: 'style-loader',
+                use: ['css-loader', 'less-loader']
+            })
         }, {
             test: /\.(gif|jpg|png|woff|svg|eot|ttf)(\?.*)?$/,
             use: 'url-loader?limit=1024&name=[name].[ext]&outputPath=img/'
         }]
-    }
+    },
+    plugins: [
+        new ExtractTextPlugin('css/common.css')
+    ]
 };
 
 // 开发环境使用 source-map
