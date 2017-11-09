@@ -1,7 +1,7 @@
 
 import Vuex from 'vuex';
 
-import App from './components/home/home.vue';
+import App from 'components/pages/home.vue';
 
 // 引入 module
 import homeState from './store/modules/home';

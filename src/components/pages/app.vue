@@ -1,6 +1,6 @@
 <template>
     <div>
-        <titleBar></titleBar>
+        <main-titlebar></main-titlebar>
         <div class="inner demo">
             <p>hello world!!!</p>
             <p>{{ prop }}</p>
@@ -16,13 +16,11 @@
 <script>
 
 import { mapState } from 'vuex';
-import TitleBar from './titlebar/main-titlebar';
 
 let i = 1;
 const message = ['hello world', 'hello'];
 
 export default {
-    components: { TitleBar },
     props: {
         prop: {
             type: String,
