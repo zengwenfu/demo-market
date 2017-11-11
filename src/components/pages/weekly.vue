@@ -4,7 +4,7 @@
         <div class=" home body-wrap wrap">
             <div class="body-inner inner flex-container flex-direction-row">
                 <div class="main-content-wrap">
-                    <home-list :list="list"></home-list>
+                    <weekly-list :list="list"></weekly-list>
                 </div>
                 <sidebar></sidebar>
             </div>
@@ -14,7 +14,7 @@
 <script>
 
 import { mapState } from 'vuex';
-import HomeList from 'components/list/home-list';
+import WeeklyList from 'components/list/weekly-list';
 import Sidebar from 'components/sidebar/sidebar';
 
 export default {
@@ -23,10 +23,10 @@ export default {
             pageNumber: 12
         };
     },
-    components: { HomeList, Sidebar },
+    components: { WeeklyList, Sidebar },
     computed: {
         ...mapState({
-            list: state => state.homeState.list
+            list: state => state.weeklyState.list
         }),
         ckey () {
             return this.key + 'yeah';
@@ -35,7 +35,7 @@ export default {
     methods: {
     },
     created () {
-        this.$store.dispatch('queryHomeList');
+        this.$store.dispatch('queryWeeklyList');
     },
     mounted () {
     }

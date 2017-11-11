@@ -1,26 +1,35 @@
-const host = 'https://dm.facemagic888.com';
-const hostMock = 'http://localhost:3000/mock';
+const host = DEV ? 'http://localhost:3000/mock' : 'https://dm.facemagic888.com';
+
 const concatUrl = (url) => `${host}${url}`;
-const concatMockUrl = (url) => `${hostMock}${url}`;
 
-const mockUrls = [
-    // 'getUserInfoApi',
-    'queryHomeListApi'
-];
-
-export default {
-    // 获取用户信息 url
-    getUserInfoApi () {
-        if (mockUrls.indexOf('getUserInfoApi') > -1) {
-            return concatMockUrl('/getUserInfo.json');
-        }
-        return concatUrl('/user/userinfo');
+/**
+ *  在此处配置请求 url 就可以
+ *  dev 配置开发环境 mock
+ *  prd 配置生产环境 数据
+ */
+let urls = {
+    dev: {
+        getUserInfoApi: '/getUserInfo.json',
+        queryHomeListApi: '/queryHomeList.json',
+        queryWeeklyListApi: '/queryWeeklyList.json'
     },
-    // 获取首页列表信息 url
-    queryHomeListApi () {
-        if (mockUrls.indexOf('queryHomeListApi') > -1) {
-            return concatMockUrl('/queryHomeList.json');
-        }
-        return concatUrl('/home/homelist');
+    prd: {
+        getUserInfoApi: '/user/userinfo',
+        queryHomeListApi: '/home/homelist'
     }
 };
+
+if (DEV) {
+    urls = urls.dev;
+} else {
+    urls = urls.prd;
+}
+
+const apis = {};
+for (const key in urls) {
+    apis[key] = () => {
+        return concatUrl(urls[key]);
+    };
+}
+
+export default apis;

@@ -1,6 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const buildHtml = require('./buildHtml.js');
+const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 function resolve (dir) {
     return path.join(__dirname, '..', dir);
@@ -69,7 +70,10 @@ const config = {
         }]
     },
     plugins: [
-        new ExtractTextPlugin('css/common.css')
+        new ExtractTextPlugin('css/common.css'),
+        new webpack.DefinePlugin({
+            DEV: !isProd
+        })
     ]
 };
 

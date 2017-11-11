@@ -4,17 +4,17 @@ import Vuex from 'vuex';
 import App from 'components/pages/weekly.vue';
 
 // 引入 module
-import homeState from './store/modules/home';
+import weeklyState from './store/modules/weekly';
 // 引入 action
-import * as homeActions from './store/actions/home';
+import * as weeklyActions from './store/actions/weekly';
 
 // 创建 store
 const store = new Vuex.Store({
     modules: {
-        homeState
+        weeklyState
     },
     actions: {
-        ...homeActions
+        ...weeklyActions
     }
 });
 
