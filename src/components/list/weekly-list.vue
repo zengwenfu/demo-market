@@ -1,6 +1,6 @@
 <template>
     <div class="list-wrap">
-        <div class="list-item flex-container flex-direction-row" v-for="item, index in list">
+        <div class="list-item flex-container flex-direction-row" v-for="item, index in list" @click="click">
             <div class="num" :style="{backgroundColor: getColor(item.num)}">
                 {{item.num}}
             </div>
@@ -19,9 +19,12 @@
     </div>
 </template>
 <script>
+    import { mapState } from 'vuex';
     export default {
-        props: {
-            list: Object
+        computed: {
+            ...mapState({
+                list: state => state.weeklyState.list
+            })
         },
         methods: {
             getColor (num) {
@@ -31,7 +34,13 @@
                 }
                 const r = 255 - index * 25;
                 return `rgb(${r}, 222, 165)`;
+            },
+            click () {
+                this.$router.push({ path: 'detail' });
             }
+        },
+        created () {
+            this.$store.dispatch('queryWeeklyList');
         }
     };
 </script>

@@ -1,12 +1,24 @@
 
 import Vuex from 'vuex';
+import VueRouter from 'vue-router';
 
-import App from 'components/pages/weekly.vue';
+import App from 'components/pages/weekly/weekly.vue';
+import WeeklyDetail from 'components/pages/weekly/weekly-detail.vue';
+import WeeklyList from 'components/pages/weekly/weekly-list.vue';
 
 // 引入 module
 import weeklyState from './store/modules/weekly';
 // 引入 action
 import * as weeklyActions from './store/actions/weekly';
+
+const routes = [
+    { path: '/detail', component: WeeklyDetail, name: 'Hello' },
+    { path: '/list', component: WeeklyList }
+];
+
+const router = new VueRouter({
+    routes
+});
 
 // 创建 store
 const store = new Vuex.Store({
@@ -19,4 +31,6 @@ const store = new Vuex.Store({
 });
 
 const Vue = window.Vue || {};
-new Vue(Vue.util.extend({ el: '#root', store }, App));
+
+Vue.config.devtools = true;
+new Vue(Vue.util.extend({ el: '#root', store, router }, App));
