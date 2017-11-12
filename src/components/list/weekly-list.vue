@@ -1,6 +1,6 @@
 <template>
     <div class="list-wrap">
-        <div class="list-item flex-container flex-direction-row" v-for="item, index in list" @click="click">
+        <div class="list-item flex-container flex-direction-row" v-for="item, index in list" @click="click(item.num)">
             <div class="num" :style="{backgroundColor: getColor(item.num)}">
                 {{item.num}}
             </div>
@@ -35,7 +35,9 @@
                 const r = 255 - index * 25;
                 return `rgb(${r}, 222, 165)`;
             },
-            click () {
+            click (num) {
+                this.$store.dispatch('queryWeeklyDetail');
+                this.$store.dispatch('setWeeklyTitle', `菲麦前端周刊第 ${num} 期`);
                 this.$router.push({ path: 'detail' });
             }
         },

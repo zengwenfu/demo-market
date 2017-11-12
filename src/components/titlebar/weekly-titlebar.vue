@@ -17,17 +17,18 @@
                 <!--logo部分，定义logo文本颜色和大小-->
                 <div class="logo"></div>
                 <!--导航栏部分，变为弹性盒子，定义对齐方式，定义宽度和左边距-->
-                <div class="title"> 菲麦前端周刊 </div>
+                <div class="title"> {{weeklyTitle}} </div>
             </div>
         </div>
     </div>
 </template>
 <script>
+    import { mapState } from 'vuex';
     export default {
-        data () {
-            return {
-                isLogin: false
-            };
+        computed: {
+            ...mapState({
+                weeklyTitle: state => state.weeklyState.weeklyTitle
+            })
         }
     };
 </script>

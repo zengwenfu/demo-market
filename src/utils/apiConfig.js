@@ -11,11 +11,14 @@ let urls = {
     dev: {
         getUserInfoApi: '/getUserInfo.json',
         queryHomeListApi: '/queryHomeList.json',
-        queryWeeklyListApi: '/queryWeeklyList.json'
+        queryWeeklyListApi: '/queryWeeklyList.json',
+        queryWeeklyDetail: '/queryWeeklyDetail.json'
     },
     prd: {
         getUserInfoApi: '/user/userinfo',
-        queryHomeListApi: '/home/homelist'
+        queryHomeListApi: '/home/homelist',
+        queryWeeklyList: '/weekly/queryWeeklyList',
+        queryWeeklyDetail: '/weekly/queryWeeklyDetail'
     }
 };
 
