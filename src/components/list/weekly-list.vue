@@ -20,23 +20,16 @@
 </template>
 <script>
     import { mapState } from 'vuex';
+    import weeklyMixin from 'mixins/weekly-mixin';
     export default {
         computed: {
             ...mapState({
                 list: state => state.weeklyState.list
             })
         },
+        mixins: [weeklyMixin],
         methods: {
-            getColor (num) {
-                let index = parseInt(num.substring(num.length - 1));
-                if (index > 5) {
-                    index = index - 5;
-                }
-                const r = 255 - index * 25;
-                return `rgb(${r}, 222, 165)`;
-            },
             click (num) {
-                this.$store.dispatch('queryWeeklyDetail');
                 this.$store.dispatch('setWeeklyTitle', `菲麦前端周刊第 ${num} 期`);
                 this.$router.push({ path: 'detail' });
             }
@@ -47,6 +40,10 @@
     };
 </script>
 <style scoped>
+.list-wrap {
+    min-height: 800px;
+}
+
 .list-item {
     background: #fff;
     position: relative;
@@ -82,9 +79,10 @@
 }
 
 .summary {
-    padding: 10px 10px 10px 0;
+    padding: 8px 10px 8px 0;
     font-size: 14px;
     color: #777;
+    line-height: 20px;
 }
 
 .title {

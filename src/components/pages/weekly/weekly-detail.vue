@@ -11,6 +11,9 @@
                 detail: state => state.weeklyState.detail
             })
         },
+        created () {
+            this.$store.dispatch('queryWeeklyDetail');
+        },
         destroyed () {
             this.$store.dispatch('setWeeklyTitle', '菲麦前端周刊');
         }

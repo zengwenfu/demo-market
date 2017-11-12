@@ -43,7 +43,8 @@ const config = {
             'assets': resolve('src/assets'),
             'components': resolve('src/components'),
             'utils': resolve('src/utils'),
-            'css': resolve('src/css')
+            'css': resolve('src/css'),
+            'mixins': resolve('src/mixins')
         }
     },
     module: {
