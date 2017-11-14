@@ -8,8 +8,9 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-touch-fullscreen" content="yes">
   <meta name="format-detection" content="telephone=no, email=no">
-  <link rel="stylesheet" href="./css/common.css">
+  <link rel="stylesheet" type="text/css" href="./css/common.css">
   <script src="https://cdn.bootcss.com/vue/2.4.4/vue.min.js"></script>
+  <script src="./common.js"></script>
 </head>
 <body>
   <div id="root"></div>

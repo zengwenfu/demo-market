@@ -1,8 +1,7 @@
 
 import Vuex from 'vuex';
 
-import App from './components/app.vue';
-import './common';
+import App from 'components/pages/app.vue';
 
 // 引入 module
 import appState from './store/modules/app';

@@ -10,6 +10,10 @@ module.exports = {
         "sourceType": "module",
         "ecmaVersion": "2017"
     },
+    "globals": {
+        Vue: false,
+        DEV: false
+    },
     "rules": {
         "indent": [
             "error",

@@ -3,7 +3,7 @@ const fs = require('fs');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const buildHtml = require('./buildHtml.js');
 const webpack = require('webpack');
-
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 function resolve (dir) {
     return path.join(__dirname, '..', dir);
 }
@@ -20,7 +20,8 @@ function getEntries () {
         const basename = path.basename(file);
         if (stat.isFile() && extname === '.js' && basename !== 'common.js') {
             // 创建 html
-            buildHtml(path.resolve(__dirname, '../dist'), basename.replace('.js', ''));
+            const name = basename.replace('.js', '');
+            name !== 'common' && buildHtml(path.resolve(__dirname, '../dist'), name);
             entries[basename] = fullPath;
         }
     });
@@ -41,7 +42,9 @@ const config = {
         alias: {
             'assets': resolve('src/assets'),
             'components': resolve('src/components'),
-            'utils': resolve('src/utils')
+            'utils': resolve('src/utils'),
+            'css': resolve('src/css'),
+            'mixins': resolve('src/mixins')
         }
     },
     module: {
@@ -55,13 +58,9 @@ const config = {
             loader: 'babel-loader',
             exclude: /node_modules/
         }, {
-            test: /\.css$/,
-            use: ['style-loader', 'css-loader']
-        }, {
             test: /\.less$/,
             use: ExtractTextPlugin.extract({
                 fallback: 'style-loader',
-                // resolve-url-loader may be chained before sass-loader if necessary
                 use: ['css-loader', 'less-loader']
             })
         }, {
@@ -70,15 +69,10 @@ const config = {
         }]
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'common.js'
-        }),
-        new ExtractTextPlugin('css/common.css')
-        // // new ExtractTextPlugin({
-        // //     filename: (getPath) => {
-        // //         return getPath('css/[name].css').replace('css/js', 'css');
-        // //     }
-        // // })
+        new ExtractTextPlugin('css/common.css'),
+        new webpack.DefinePlugin({
+            DEV: !isProd
+        })
     ]
 };
 
