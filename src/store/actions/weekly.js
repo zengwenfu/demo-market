@@ -17,3 +17,9 @@ export async function queryWeeklyDetail ({ commit }) {
 export function setWeeklyTitle ({ commit }, title) {
     commit(types.SET_WEEKLY_TITLE, title);
 }
+
+export async function saveOrUpdate ({ commit }, params) {
+    const url = apiConfig.saveOrUpdateWeeklyApi();
+    const data = await request(url, params, 'POST') || {};
+    return data;
+}

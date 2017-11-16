@@ -73,7 +73,8 @@ const config = {
     plugins: [
         new ExtractTextPlugin('css/common.css'),
         new webpack.DefinePlugin({
-            DEV: !isProd
+            DEV: !isProd,
+            ENV: JSON.stringify(process.env.NODE_ENV)
         })
     ]
 };

@@ -1,4 +1,8 @@
-const host = DEV ? 'http://localhost:3000/mock' : 'https://dm.facemagic888.com';
+const host = {
+    'dev': 'http://localhost:3000/mock',
+    'stg': 'http://localhost:5001',
+    'production': 'https://dm.facemagic888.com'
+}[ENV];
 
 const concatUrl = (url) => `${host}${url}`;
 
@@ -17,12 +21,13 @@ let urls = {
     prd: {
         getUserInfoApi: '/user/userinfo',
         queryHomeListApi: '/home/homelist',
-        queryWeeklyList: '/weekly/queryWeeklyList',
-        queryWeeklyDetail: '/weekly/queryWeeklyDetail'
+        queryWeeklyListApi: '/weekly/queryWeeklyList',
+        queryWeeklyDetail: '/weekly/queryWeeklyDetail',
+        saveOrUpdateWeeklyApi: '/weekly/saveOrUpdate'
     }
 };
 
-if (DEV) {
+if (ENV === 'dev') {
     urls = urls.dev;
 } else {
     urls = urls.prd;

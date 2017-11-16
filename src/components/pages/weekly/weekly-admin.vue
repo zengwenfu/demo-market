@@ -50,6 +50,55 @@ export default {
             this.showAdd = false;
         },
         onAdd () {
+            let data = {
+                summary: '窗外的麻雀，在电线杆上多嘴，你所这一句,啦啦啦啦',
+                _id: '5a0c35b7ca2b6c40aabe8306',
+                columns: [
+                    {
+                        name: '菲麦自研究',
+                        articles: [
+                            {
+                                title: '真的爱你 哈哈哈哈',
+                                url: 'http://www.facemagic888.com',
+                                author: '小哥',
+                                summary: '说走咱就走'
+                            }, {
+                                title: '真的爱你',
+                                url: 'http://www.facemagic888.com',
+                                author: '小哥',
+                                summary: '说走咱就走'
+                            }
+                        ]
+                    },
+                    {
+                        name: '菲麦自研究',
+                        articles: [{
+                            title: '真的爱你',
+                            url: 'http://www.facemagic888.com',
+                            author: '小哥',
+                            summary: '说走咱就走'
+                        }]
+                    },
+                    {
+                        name: '菲麦自研究妮妮',
+                        articles: [{
+                            title: '真的爱你',
+                            url: 'http://www.facemagic888.com',
+                            author: '小哥',
+                            summary: '说走咱就走'
+                        }]
+                    }
+                ]
+            };
+
+            data = JSON.stringify(data);
+
+            const obj = {
+                data
+            };
+
+            this.$store.dispatch('saveOrUpdate', obj);
+
             this.showAdd = false;
         }
     }

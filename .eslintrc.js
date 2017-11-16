@@ -12,7 +12,8 @@ module.exports = {
     },
     "globals": {
         Vue: false,
-        DEV: false
+        DEV: false,
+        ENV: false
     },
     "rules": {
         "indent": [
