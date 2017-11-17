@@ -19,7 +19,12 @@ let urls = {
         queryWeeklyDetail: '/queryWeeklyDetail.json'
     },
     prd: {
+        loginApi: '/user/login',
         getUserInfoApi: '/user/userinfo',
+        registerApi: '/user/register',
+        captchaApi: '/user/captcha',
+        decipherApi: '/user/decipher',
+        checkCaptchaApi: '/user/checkCaptcha',
         queryHomeListApi: '/home/homelist',
         queryWeeklyListApi: '/weekly/queryWeeklyList',
         queryWeeklyDetail: '/weekly/queryWeeklyDetail',
