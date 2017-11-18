@@ -2,7 +2,7 @@
     <base-window @onCancle="onCancle" @onSure="onSure" :height="height">
         <div class="field title-field">
             <label for="title">标题：</label>
-              <input type="text" name="title" placeholder="请输入标题" ref="title"/>
+            <input type="text" name="title" placeholder="请输入标题" ref="title"/>
         </div>
         <div class="field">
             <label for="url">链接：</label>

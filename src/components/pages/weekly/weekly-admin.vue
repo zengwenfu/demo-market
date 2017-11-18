@@ -10,13 +10,14 @@
                 </div>
                 <div class="main-content-wrap" v-if="showSummary">
                     <div class="summary">
-                        <p>移动互联网时代，混合编程对于前端同学来说是不可回避的课题，相信大部分同学都有曾做过并且使用上堪称熟练，但是面试的时候，你的回答真的能用面试官感到满意么？</p><img :src="require('assets/img/edit.png')" class="summary-edit" />
+                        <p>{{detail.summary}}</p><img :src="require('assets/img/edit.png')" class="summary-edit" @click="onSummaryEdit"/>
                     </div>
                 </div>
             </div>
         </div>
         <add-window v-if="showAdd" @onCancle="onCancle" @onSure="onAdd" :data="windowData"></add-window>
         <add-column-window v-if="showColumnAdd" @onCancle="onColumnCancle" @onSure="onColumnSure" :data="windowColumnData"></add-column-window>
+        <add-summary-window v-if="showSummaryAdd" @onCancle="onSummaryCancel" @onSure="onSummarySure" :data="windowSummaryData"></add-summary-window>
     </div>
 </template>
 <script>
@@ -25,6 +26,7 @@ import Sidebar from 'components/sidebar/sidebar-weekly-admin';
 import ItemList from 'components/list/weekly-column-item';
 import AddWindow from 'components/window/add-weekly';
 import AddColumnWindow from 'components/window/add-weekly-column';
+import addSummaryWindow from 'components/window/add-weekly-summary';
 import { mapState } from 'vuex';
 
 export default {
@@ -36,10 +38,12 @@ export default {
             showColumnAdd: false,
             windowData: {},
             windowColumnData: {},
-            columnEditIndex: 0
+            columnEditIndex: 0,
+            showSummaryAdd: false,
+            windowSummaryData: {}
         };
     },
-    components: { Sidebar, ItemList, AddWindow, AddColumnWindow },
+    components: { Sidebar, ItemList, AddWindow, AddColumnWindow, addSummaryWindow },
     created () {
         this.$store.dispatch('setUserInfo').then(res => {
             if (res.code !== '0000' || !res.data._id) {
@@ -96,6 +100,35 @@ export default {
         },
         summaryClick () {
             this.showSummary = true;
+            if (!this.detail.summary || this.detail.summary === '') {
+                this.windowSummaryData = {};
+                this.showSummaryAdd = true;
+            }
+        },
+        onSummaryCancel () {
+            this.showSummaryAdd = false;
+            if (!this.detail.summary || this.detail.summary === '') {
+                const index = this.detail.columns.length - 1;
+                if (this.selectColumn === index) {
+                    this.showSummary = false;
+                } else {
+                    this.$store.dispatch('setColumnEditIndex', index);
+                }
+            }
+        },
+        onSummaryEdit () {
+            this.windowSummaryData = {
+                summary: this.detail.summary
+            };
+            this.showSummaryAdd = true;
+        },
+        onSummarySure ({ summary }) {
+            this.detail.summary = summary;
+            this.showSummaryAdd = false;
+            const obj = {
+                data: JSON.stringify(this.detail)
+            };
+            this.$store.dispatch('saveOrUpdate', obj);
         },
         articleDelete (id) {
             const articles = this.detail.columns[this.selectColumn].articles;
