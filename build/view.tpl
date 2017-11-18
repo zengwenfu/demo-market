@@ -14,6 +14,7 @@
 </head>
 <body>
   <div id="root"></div>
+  <script src="common.js"></script>
   <script src="{{ bundleUrl }}"></script>
 </body>
 </html>

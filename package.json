@@ -55,6 +55,7 @@
     "webpack": "^3.5.5"
   },
   "dependencies": {
-    "babel-polyfill": "^6.26.0"
+    "babel-polyfill": "^6.26.0",
+    "extract-text-webpack-plugin": "^3.0.2"
   }
 }

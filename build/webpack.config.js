@@ -1,5 +1,6 @@
 const path = require('path');
 const fs = require('fs');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const buildHtml = require('./buildHtml.js');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -8,7 +9,6 @@ function resolve (dir) {
 }
 
 const isProd = process.env.NODE_ENV === 'production';
-
 // 多页面 bundle
 function getEntries () {
     const entries = {};
@@ -18,7 +18,7 @@ function getEntries () {
         const stat = fs.statSync(fullPath);
         const extname = path.extname(fullPath);
         const basename = path.basename(file);
-        if (stat.isFile() && extname === '.js') {
+        if (stat.isFile() && extname === '.js' && basename !== 'common.js') {
             // 创建 html
             const name = basename.replace('.js', '');
             name !== 'common' && buildHtml(path.resolve(__dirname, '../dist'), name);
@@ -50,11 +50,9 @@ const config = {
     module: {
         rules: [{
             test: /\.vue$/,
-            loaders: [
-                {
-                    loader: 'vue-loader'
-                }
-            ]
+            loaders: [{
+                loader: 'vue-loader'
+            }]
         }, {
             test: /\.js$/,
             loader: 'babel-loader',
