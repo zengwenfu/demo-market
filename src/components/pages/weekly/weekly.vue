@@ -21,7 +21,7 @@ export default {
     },
     components: { Sidebar },
     created () {
-        this.$router.push({ path: 'list' });
+        // this.$router.push({ path: 'list' });
     },
     mounted () {
     }

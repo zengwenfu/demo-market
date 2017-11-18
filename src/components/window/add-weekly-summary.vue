@@ -40,6 +40,10 @@
                     alert('请输入概要');
                     return;
                 }
+                if (summary.length > 116) {
+                    alert('概要最多输入116个字, 否则有可能会被截断，请三思');
+                    return;
+                }
                 this.$emit('onSure', {
                     summary
                 });

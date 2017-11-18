@@ -1,5 +1,5 @@
 <template>
-    <column-list :detail="detail"/>
+    <column-list :detail="columns"/>
 </template>
 <script>
     import { mapState } from 'vuex';
@@ -9,10 +9,18 @@
         computed: {
             ...mapState({
                 detail: state => state.weeklyState.detail
-            })
+            }),
+            columns () {
+                return this.detail.columns || [];
+            }
         },
         created () {
-            this.$store.dispatch('queryWeeklyDetail');
+            const id = this.$route.params.id;
+            if (!id) {
+                alert('文章不存在');
+                return;
+            }
+            this.$store.dispatch('queryWeeklyDetail', { id });
         },
         destroyed () {
             this.$store.dispatch('setWeeklyTitle', '菲麦前端周刊');

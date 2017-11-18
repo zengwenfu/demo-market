@@ -15,17 +15,17 @@
             <div class="main-title-left flex-container flex-direction-row">
 
                 <!--logo部分，定义logo文本颜色和大小-->
-                <div class="logo"></div>
+                <div class="logo" @click="toHome"></div>
                 <!--导航栏部分，变为弹性盒子，定义对齐方式，定义宽度和左边距-->
                 <div class="title"> {{weeklyTitle}} </div>
             </div>
             <div class="actions" v-if="needActions">
                 <div class="button-wrap flex-container flex-direction-row">
-                    <div class="pre-look">预览</div>
+                    <div class="pre-look" @click="preLook">预览</div>
                     <div class="line"></div>
-                    <div class="publish">发布</div>
+                    <div class="publish" @click="publish">发布</div>
                     <div class="line"></div>
-                    <div class="download">下载MD</div>
+                    <div class="download" @click="download">下载MD</div>
                 </div>
             </div>
         </div>
@@ -44,6 +44,20 @@
             ...mapState({
                 weeklyTitle: state => state.weeklyState.weeklyTitle
             })
+        },
+        methods: {
+            toHome () {
+                location.href = './weekly.html';
+            },
+            preLook () {
+                this.$emit('preLook');
+            },
+            publish () {
+                this.$emit('publish');
+            },
+            download () {
+                this.$emit('download');
+            }
         }
     };
 </script>
@@ -85,6 +99,7 @@
         height: 60px;
         background: transparent url(~assets/img/face.png) no-repeat;
         background-size: cover;
+        cursor: pointer;
     }
 
     .title {

@@ -10,5 +10,11 @@ export const parseQueryString = (url) => {
     if (!search) {
         return {};
     }
-    return JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+    let result;
+    try {
+        result = JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}');
+    } catch (e) {
+        result = {};
+    }
+    return result;
 };

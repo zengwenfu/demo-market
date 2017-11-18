@@ -26,10 +26,11 @@ let urls = {
         decipherApi: '/user/decipher',
         checkCaptchaApi: '/user/checkCaptcha',
         queryHomeListApi: '/home/homelist',
-        queryWeeklyListApi: '/weekly/queryWeeklyList',
+        queryWeeklyListApi: '/weekly/findWeeklys',
         queryWeeklyDetail: '/weekly/findById',
         saveOrUpdateWeeklyApi: '/weekly/admin/saveOrUpdate',
-        queryUnPub: '/weekly/admin/findUnPub'
+        queryUnPub: '/weekly/admin/findUnPub',
+        publishWeekly: '/weekly/admin/publish'
     }
 };
 

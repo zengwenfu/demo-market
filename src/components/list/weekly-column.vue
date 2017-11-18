@@ -5,7 +5,7 @@
                 <div class="header-icon" :style="{backgroundColor: getColor(index)}"></div>
                 <div class="name" :style="{color: getColor(index)}">{{ item.name }}</div>
             </div>
-            <item-list class="item-list" :itemList="item.items"></item-list>
+            <item-list class="item-list" :itemList="item.articles"></item-list>
         </div>
 	</div>
 </template>
@@ -17,12 +17,14 @@
             detail: Object
         },
         components: { ItemList },
-        mixins: [weeklyMixin],
-        created () {
-        }
+        mixins: [weeklyMixin]
     };
 </script>
 <style scoped>
+    .column-wrap {
+        min-height: 800px;
+    }
+    
     .header {
         border-bottom-width: 1px;
         border-bottom-style: solid;
@@ -42,4 +44,5 @@
         line-height: 40px;
         margin-left: 20px;
     }
+
 </style>

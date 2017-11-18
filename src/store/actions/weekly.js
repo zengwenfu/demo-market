@@ -4,19 +4,22 @@ import apiConfig from '../../utils/apiConfig';
 
 export async function queryWeeklyList ({ commit }) {
     const url = apiConfig.queryWeeklyListApi();
-    const data = await request(url) || {};
-    commit(types.QUERY_WEEKLY_LIST, data.list);
+    const res = await request(url) || {};
+    if (res.code === '0000') {
+        commit(types.QUERY_WEEKLY_LIST, res.data);
+    }
 }
 
 export async function queryWeeklyDetail ({ commit }, { id }) {
-    let url;
+    let res;
     // 如果传了 id 根据 id 查询
     if (id) {
-        url = apiConfig.queryWeeklyDetail();
+        const url = apiConfig.queryWeeklyDetail();
+        res = await request(url, { id }) || {};
     } else { // 查询未发布
-        url = apiConfig.queryUnPub();
+        const url = apiConfig.queryUnPub();
+        res = await request(url) || {};
     }
-    const res = await request(url) || {};
     if (res.code === '0000') {
         // 未传入id 未查询到未发布，定义默认栏目
         if (!id && (!res.data || !res.data._id)) {
@@ -45,4 +48,13 @@ export async function saveOrUpdate ({ commit, dispatch }, params) {
 
 export function setColumnEditIndex ({ commit }, index) {
     commit(types.SET_COLUMN_EDIT_INDEX, index);
+}
+
+export async function publishWeekly ({ commit }, id) {
+    const url = apiConfig.publishWeekly();
+    const params = {
+        data: JSON.stringify({ id })
+    };
+    const res = await request(url, params, 'POST') || {};
+    return res;
 }

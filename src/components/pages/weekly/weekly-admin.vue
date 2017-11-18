@@ -1,6 +1,6 @@
 <template>
     <div class="weekly-admin-wrap">
-        <weekly-titlebar :needActions="true"></weekly-titlebar>
+        <weekly-titlebar :needActions="true" @publish="publish" @preLook="preLook"></weekly-titlebar>
         <div class="home body-wrap wrap">
             <div class="body-inner inner flex-container flex-direction-row">
                 <sidebar @columnClick="columnClick" @summaryClick="summaryClick" @addClick="columnAdd" @editClick="columnEdit" @deleteClick="columnDelete"></sidebar>
@@ -28,6 +28,7 @@ import AddWindow from 'components/window/add-weekly';
 import AddColumnWindow from 'components/window/add-weekly-column';
 import addSummaryWindow from 'components/window/add-weekly-summary';
 import { mapState } from 'vuex';
+import { parseQueryString } from 'utils/common';
 
 export default {
     data () {
@@ -53,7 +54,8 @@ export default {
                 if (res.data.role !== '1') {
                     alert('权限不够');
                 } else {
-                    this.$store.dispatch('queryWeeklyDetail', {});
+                    const query = parseQueryString();
+                    this.$store.dispatch('queryWeeklyDetail', query);
                 }
             }
         });
@@ -200,6 +202,28 @@ export default {
                 index = index - 1;
             }
             this.$store.dispatch('setColumnEditIndex', index);
+        },
+        publish () {
+            if (!this.detail._id) {
+                alert('请添加文章再发布');
+            } else if (!this.detail.summary) {
+                alert('请输入本期概要');
+            } else {
+                this.$store.dispatch('publishWeekly', this.detail._id).then(res => {
+                    if (res.code === '0000') {
+                        location.href = './weekly.html';
+                    } else {
+                        alert(res.msg);
+                    }
+                });
+            }
+        },
+        preLook () {
+            if (this.detail._id) {
+                location.href = `./weekly.html#/detail/${this.detail._id}`;
+            } else {
+                alert('请添加文章');
+            }
         }
     }
 };

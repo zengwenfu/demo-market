@@ -1,6 +1,6 @@
 <template>
     <div class="list-wrap">
-        <div class="list-item flex-container flex-direction-row" v-for="item, index in list" @click="click(item.num)">
+        <div class="list-item flex-container flex-direction-row" v-for="item, index in list" @click="click(item.num, item._id)">
             <div class="num" :style="{backgroundColor: getColor(item.num)}">
                 {{item.num}}
             </div>
@@ -9,7 +9,10 @@
                     菲麦前端周刊第{{item.num}}期
                 </div>
                 <div class="summary">
-                    移动互联网时代，混合编程对于前端同学来说是不可回避的课题，相信大部分同学都有曾做过并且使用上堪称熟练，但是面试的时候，你的回答真的能用面试官感到满意么？
+                    {{ item.summary }}
+                </div>
+                <div class="publish-time">
+                    {{ item.publishTime }}
                 </div>
             </div>
         </div>
@@ -26,9 +29,9 @@
         },
         mixins: [weeklyMixin],
         methods: {
-            click (num) {
+            click (num, id) {
                 this.$store.dispatch('setWeeklyTitle', `菲麦前端周刊第 ${num} 期`);
-                this.$router.push({ path: 'detail' });
+                this.$router.push({ path: `detail/${id}` });
             }
         },
         created () {
@@ -44,7 +47,7 @@
 .list-item {
     background: #fff;
     position: relative;
-    height: 140px;
+    height: 180px;
     margin-top: 15px;
     cursor: pointer;
     align-items: center;
@@ -62,9 +65,9 @@
 
 .num {
     width: 200px;
-    height: 132px;
+    height: 160px;
     text-align: center;
-    line-height: 132px;
+    line-height: 160px;
     color: #fff;
     font-size: 26px;
 }
@@ -80,6 +83,13 @@
     font-size: 14px;
     color: #777;
     line-height: 24px;
+    max-height: 72px;
+    overflow: hidden;
+}
+
+.publish-time {
+    font-size: 14px;
+    color: #777;
 }
 
 .title {

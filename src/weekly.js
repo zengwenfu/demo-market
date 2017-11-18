@@ -12,8 +12,8 @@ import weeklyState from './store/modules/weekly';
 import * as weeklyActions from './store/actions/weekly';
 
 const routes = [
-    { path: '/detail', component: WeeklyDetail, name: 'Hello' },
-    { path: '/list', component: WeeklyList }
+    { path: '/detail/:id', component: WeeklyDetail },
+    { path: '/', component: WeeklyList }
 ];
 
 const router = new VueRouter({
