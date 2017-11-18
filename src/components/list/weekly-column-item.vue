@@ -10,10 +10,10 @@
                      {{item.title}}@{{item.author}}
                     </div>
                     <div class="handlers flex-container flex-direction-row" v-if="!needGoIcon">
-                        <div class="delete handler-icon">
+                        <div class="delete handler-icon" @click="onDelete(item._id, $event)">
                             <img :src="require('assets/img/delete.png')"/>
                         </div>
-                        <div class="edit handler-icon">
+                        <div class="edit handler-icon" @click="onEdit(item._id, $event)">
                             <img :src="require('assets/img/edit.png')"/>
                         </div>
                     </div>
@@ -37,6 +37,14 @@
         methods: {
             goUrl (url) {
                 window.open(url);
+            },
+            onEdit (id, e) {
+                e.stopPropagation();
+                this.$emit('onEdit', id);
+            },
+            onDelete (id, e) {
+                e.stopPropagation();
+                this.$emit('onDelete', id);
             }
         }
     };

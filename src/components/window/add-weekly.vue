@@ -1,101 +1,84 @@
 <template>
-	<div class="add-weekly-window-wrap">
-		<div class="window">
-			<div class="field title-field">
-				<label for="title">标题：</label>
-  				<input type="text" name="title" placeholder="请输入标题" />
-			</div>
-            <div class="field">
-                <label for="url">链接：</label>
-                <input type="text" name="url" placeholder="请输入链接" />
-            </div>
-            <div class="field">
-                <label for="author">作者：</label>
-                <input type="text" name="author" placeholder="请输入作者">
-            </div>
-            <div class="field">
-                <label for="summary">概要：</label>
-                <textarea rows="6" cols="47" placeholder="请输入概要">
-                </textarea>
-            </div>
-            <div class="handlers flex-container flex-direction-row">
-                <div class="button" @click="onCancle">取消</div>
-                <div class="button" @click="onSure">确定</div>
-            </div>
-		</div>
-	</div>
+    <base-window @onCancle="onCancle" @onSure="onSure" :height="height">
+        <div class="field title-field">
+            <label for="title">标题：</label>
+              <input type="text" name="title" placeholder="请输入标题" ref="title"/>
+        </div>
+        <div class="field">
+            <label for="url">链接：</label>
+            <input type="text" name="url" placeholder="请输入链接" ref="url"/>
+        </div>
+        <div class="field">
+            <label for="author">作者：</label>
+            <input type="text" name="author" placeholder="请输入作者" ref="author">
+        </div>
+        <div class="field">
+            <label for="summary">概要：</label>
+            <textarea rows="6" cols="47" placeholder="请输入概要" ref="summary">
+            </textarea>
+        </div>
+    </base-window>
 </template>
 <script>
+    import BaseWindow from './base-window';
     export default {
+        components: { BaseWindow },
+        props: {
+            data: Object
+        },
+        data () {
+            return {
+                height: 500
+            };
+        },
+        mounted () {
+            this.setData();
+        },
+        updated () {
+            this.setData();
+        },
         methods: {
+            setData () {
+                for (const key in this.data) {
+                    if (this.$refs[key]) {
+                        this.$refs[key].value = this.data[key];
+                    }
+                }
+            },
             onCancle () {
                 this.$emit('onCancle');
             },
             onSure () {
-                this.$emit('onSure');
+                const title = this.$refs.title.value;
+                if (!title || title === '') {
+                    alert('请输入标题');
+                    return;
+                }
+                const url = this.$refs.url.value;
+                if (!url || url === '') {
+                    alert('请输入链接');
+                    return;
+                }
+                const author = this.$refs.author.value;
+                if (!author || author === '') {
+                    alert('请输入作者');
+                    return;
+                }
+                const summary = this.$refs.summary.value;
+                if (!summary || summary === '') {
+                    alert('请输入概述');
+                    return;
+                }
+                this.$emit('onSure', {
+                    title,
+                    url,
+                    author,
+                    summary,
+                    id: this.data._id
+                });
             }
         }
     };
 </script>
 <style scoped>
-
-    .add-weekly-window-wrap {
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-
-    .window {
-        width: 430px;
-        height: 500px;
-        background-color: #fff;
-        margin: auto;
-        margin-top: 100px;
-        -webkit-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-        -moz-box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-        border-radius: 20px;
-    }
-
-    .field {
-        padding: 20px;
-    }
-
-    .field.title-field {
-        padding-top: 30px;
-    }
-
-    input {
-        height: 30px;
-        width: 300px;
-        border-radius: 15px;
-        border: 1px solid #ccc;
-        padding-left: 10px;
-    }
-
-    textarea {
-        border-radius: 15px;
-        border: 1px solid #ccc;
-        padding: 10px;
-    }
-
-    .button {
-        height: 35px;
-        width: 100px;
-        background-color: #1296db;
-        border-radius: 25px;
-        color: #fff;
-        text-align: center;
-        line-height: 35px;
-        margin-left: 20px;
-        cursor: pointer;
-    }
-
-    .handlers {
-        margin-top: 30px;
-        justify-content: center;
-    }
 </style>

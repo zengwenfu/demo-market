@@ -19,12 +19,27 @@
                 <!--导航栏部分，变为弹性盒子，定义对齐方式，定义宽度和左边距-->
                 <div class="title"> {{weeklyTitle}} </div>
             </div>
+            <div class="actions" v-if="needActions">
+                <div class="button-wrap flex-container flex-direction-row">
+                    <div class="pre-look">预览</div>
+                    <div class="line"></div>
+                    <div class="publish">发布</div>
+                    <div class="line"></div>
+                    <div class="download">下载MD</div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 <script>
     import { mapState } from 'vuex';
     export default {
+        props: {
+            needActions: {
+                type: Boolean,
+                default: false
+            }
+        },
         computed: {
             ...mapState({
                 weeklyTitle: state => state.weeklyState.weeklyTitle
@@ -76,6 +91,22 @@
         margin-left: 30px;
         font-size: 25px;
         color: #000;
+    }
+
+    .button-wrap {
+        width: 180px;
+        justify-content: space-between;
+        text-decoration: underline;
+    }
+
+    .button-wrap > div {
+        cursor: pointer;
+    }
+
+    .line {
+        width: 1px;
+        height: 20px;
+        background-color: #ccc;
     }
 
 </style>

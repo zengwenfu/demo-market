@@ -1,7 +1,7 @@
 const host = {
     'dev': 'http://localhost:3000/mock',
     'stg': 'http://localhost:5001',
-    'production': 'https://dm.facemagic888.com'
+    'production': 'http://dm.facemagic888.com'
 }[ENV];
 
 const concatUrl = (url) => `${host}${url}`;
@@ -27,8 +27,9 @@ let urls = {
         checkCaptchaApi: '/user/checkCaptcha',
         queryHomeListApi: '/home/homelist',
         queryWeeklyListApi: '/weekly/queryWeeklyList',
-        queryWeeklyDetail: '/weekly/queryWeeklyDetail',
-        saveOrUpdateWeeklyApi: '/weekly/saveOrUpdate'
+        queryWeeklyDetail: '/weekly/findById',
+        saveOrUpdateWeeklyApi: '/weekly/admin/saveOrUpdate',
+        queryUnPub: '/weekly/admin/findUnPub'
     }
 };
 

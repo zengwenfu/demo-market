@@ -35,7 +35,12 @@ export default {
             if (res.code !== '0000') {
                 this.$Message.error(res.msg);
             } else {
-                location.href = './app.html';
+                this.$Message.error(localStorage.fromUrl);
+                if (localStorage.fromUrl) {
+                    location.href = localStorage.fromUrl;
+                } else {
+                    location.href = './home.html';
+                }
             }
         },
         async registerMessage () {

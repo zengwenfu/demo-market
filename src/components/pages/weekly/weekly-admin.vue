@@ -1,16 +1,22 @@
 <template>
     <div class="weekly-admin-wrap">
-        <weekly-titlebar></weekly-titlebar>
-        <div class=" home body-wrap wrap">
+        <weekly-titlebar :needActions="true"></weekly-titlebar>
+        <div class="home body-wrap wrap">
             <div class="body-inner inner flex-container flex-direction-row">
-                <sidebar @columnClick="columnClick"></sidebar>
-                <div class="main-content-wrap">
-                    <item-list :itemList="itemList" :needGoIcon="false"></item-list>
+                <sidebar @columnClick="columnClick" @summaryClick="summaryClick" @addClick="columnAdd" @editClick="columnEdit" @deleteClick="columnDelete"></sidebar>
+                <div class="main-content-wrap" v-if="!showSummary">
+                    <item-list :itemList="itemList" :needGoIcon="false" @onDelete="articleDelete" @onEdit="articleEdit"></item-list>
                     <div class="add" @click="addClick">+</div>
+                </div>
+                <div class="main-content-wrap" v-if="showSummary">
+                    <div class="summary">
+                        <p>移动互联网时代，混合编程对于前端同学来说是不可回避的课题，相信大部分同学都有曾做过并且使用上堪称熟练，但是面试的时候，你的回答真的能用面试官感到满意么？</p><img :src="require('assets/img/edit.png')" class="summary-edit" />
+                    </div>
                 </div>
             </div>
         </div>
-        <add-window v-if="showAdd" @onCancle="onCancle" @onSure="onAdd"></add-window>
+        <add-window v-if="showAdd" @onCancle="onCancle" @onSure="onAdd" :data="windowData"></add-window>
+        <add-column-window v-if="showColumnAdd" @onCancle="onColumnCancle" @onSure="onColumnSure" :data="windowColumnData"></add-column-window>
     </div>
 </template>
 <script>
@@ -18,88 +24,149 @@
 import Sidebar from 'components/sidebar/sidebar-weekly-admin';
 import ItemList from 'components/list/weekly-column-item';
 import AddWindow from 'components/window/add-weekly';
+import AddColumnWindow from 'components/window/add-weekly-column';
 import { mapState } from 'vuex';
 
 export default {
     data () {
         return {
             selectColumn: 0,
-            showAdd: false
+            showAdd: false,
+            showSummary: false,
+            showColumnAdd: false,
+            windowData: {},
+            windowColumnData: {},
+            columnEditIndex: 0
         };
     },
-    components: { Sidebar, ItemList, AddWindow },
+    components: { Sidebar, ItemList, AddWindow, AddColumnWindow },
     created () {
-        this.$store.dispatch('queryWeeklyDetail');
+        this.$store.dispatch('setUserInfo').then(res => {
+            if (res.code !== '0000' || !res.data._id) {
+                window.localStorage.fromUrl = window.location;
+                window.location.href = './login.html';
+            } else {
+                if (res.data.role !== '1') {
+                    alert('权限不够');
+                } else {
+                    this.$store.dispatch('queryWeeklyDetail', {});
+                }
+            }
+        });
     },
     computed: {
         ...mapState({
             detail: state => state.weeklyState.detail
         }),
         itemList () {
-            return this.detail[this.selectColumn] ? this.detail[this.selectColumn].items : [];
+            return this.detail.columns && this.detail.columns[this.selectColumn] ? this.detail.columns[this.selectColumn].articles : [];
         }
     },
     methods: {
         columnClick (index) {
             this.selectColumn = index;
+            this.showSummary = false;
         },
         addClick () {
+            this.windowData = {};
             this.showAdd = true;
         },
         onCancle () {
             this.showAdd = false;
         },
-        onAdd () {
-            let data = {
-                summary: '窗外的麻雀，在电线杆上多嘴，你所这一句,啦啦啦啦',
-                _id: '5a0c35b7ca2b6c40aabe8306',
-                columns: [
-                    {
-                        name: '菲麦自研究',
-                        articles: [
-                            {
-                                title: '真的爱你 哈哈哈哈',
-                                url: 'http://www.facemagic888.com',
-                                author: '小哥',
-                                summary: '说走咱就走'
-                            }, {
-                                title: '真的爱你',
-                                url: 'http://www.facemagic888.com',
-                                author: '小哥',
-                                summary: '说走咱就走'
-                            }
-                        ]
-                    },
-                    {
-                        name: '菲麦自研究',
-                        articles: [{
-                            title: '真的爱你',
-                            url: 'http://www.facemagic888.com',
-                            author: '小哥',
-                            summary: '说走咱就走'
-                        }]
-                    },
-                    {
-                        name: '菲麦自研究妮妮',
-                        articles: [{
-                            title: '真的爱你',
-                            url: 'http://www.facemagic888.com',
-                            author: '小哥',
-                            summary: '说走咱就走'
-                        }]
-                    }
-                ]
-            };
-
-            data = JSON.stringify(data);
-
-            const obj = {
-                data
-            };
-
-            this.$store.dispatch('saveOrUpdate', obj);
-
+        onAdd (data) {
+            if (!data.id) {
+                this.detail.columns[this.selectColumn].articles.push(data);
+                const obj = {
+                    data: JSON.stringify(this.detail)
+                };
+                this.$store.dispatch('saveOrUpdate', obj);
+            } else {
+                const articles = this.detail.columns[this.selectColumn].articles;
+                const index = articles.findIndex(item => {
+                    return data.id === item._id;
+                });
+                articles[index] = data;
+                const obj = {
+                    data: JSON.stringify(this.detail)
+                };
+                this.$store.dispatch('saveOrUpdate', obj);
+            }
             this.showAdd = false;
+        },
+        summaryClick () {
+            this.showSummary = true;
+        },
+        articleDelete (id) {
+            const articles = this.detail.columns[this.selectColumn].articles;
+            const index = articles.findIndex(item => {
+                return id === item._id;
+            });
+            // 从数组中移除
+            articles.splice(index, 1);
+            const obj = {
+                data: JSON.stringify(this.detail)
+            };
+            this.$store.dispatch('saveOrUpdate', obj);
+        },
+        articleEdit (id) {
+            const articles = this.detail.columns[this.selectColumn].articles;
+            const index = articles.findIndex(item => {
+                return id === item._id;
+            });
+            this.windowData = articles[index];
+            this.showAdd = true;
+        },
+        columnAdd (index) {
+            this.windowColumnData = {};
+            this.columnEditIndex = index;
+            this.showColumnAdd = true;
+        },
+        columnEdit (index) {
+            this.columnEditIndex = index;
+            this.windowColumnData = {
+                id: this.detail.columns[index]._id,
+                name: this.detail.columns[index].name
+            };
+            this.showColumnAdd = true;
+        },
+        onColumnCancle () {
+            this.showColumnAdd = false;
+        },
+        onColumnSure ({ id, columnName }) {
+            if (id) {
+                this.detail.columns[this.columnEditIndex].name = columnName;
+                this.$store.dispatch('setColumnEditIndex', this.columnEditIndex);
+            } else {
+                const columns = this.detail.columns;
+                const newColumn = {
+                    name: columnName,
+                    articles: []
+                };
+                columns.splice(this.columnEditIndex + 1, 0, newColumn);
+                this.$store.dispatch('setColumnEditIndex', this.columnEditIndex + 1);
+            }
+            const obj = {
+                data: JSON.stringify(this.detail)
+            };
+            this.$store.dispatch('saveOrUpdate', obj);
+            this.showColumnAdd = false;
+        },
+        columnDelete (index) {
+            const columns = this.detail.columns;
+            if (columns.length === 1) {
+                alert('至少保持一个栏目');
+                return;
+            }
+            columns.splice(index, 1);
+            const obj = {
+                data: JSON.stringify(this.detail)
+            };
+            this.$store.dispatch('saveOrUpdate', obj);
+            if (index === columns.length) {
+                index = index - 1;
+            }
+            this.$store.dispatch('setColumnEditIndex', index);
         }
     }
 };
@@ -142,5 +209,18 @@ export default {
     .weekly-admin-wrap {
         width: 100%;
         height: 100%;
+    }
+
+    .summary {
+        padding: 40px;
+        width: 500px;
+        color: #777;
+        font-size: 16px;
+        line-height: 26px;
+    }
+
+    .summary-edit {
+        margin-top: 10px;
+        cursor: pointer;
     }
 </style>
