@@ -17,7 +17,7 @@
         created () {
             const id = this.$route.params.id;
             if (!id) {
-                alert('文章不存在');
+                this.$Message.error('文章不存在');
                 return;
             }
             this.$store.dispatch('queryWeeklyDetail', { id });

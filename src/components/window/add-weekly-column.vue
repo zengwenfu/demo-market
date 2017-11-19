@@ -37,7 +37,7 @@
             onSure () {
                 const columnName = this.$refs.columnName.value;
                 if (!columnName || columnName === '') {
-                    alert('请输入栏目名');
+                    this.$Message.error('请输入栏目名');
                     return;
                 }
                 this.$emit('onSure', {

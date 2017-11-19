@@ -37,11 +37,11 @@
             onSure () {
                 const summary = this.$refs.summary.value;
                 if (!summary || summary === '') {
-                    alert('请输入概要');
+                    this.$Message.error('请输入概要');
                     return;
                 }
                 if (summary.length > 116) {
-                    alert('概要最多输入116个字, 否则有可能会被截断，请三思');
+                    this.$Message.error('概要最多输入116个字, 否则有可能会被截断，请三思');
                     return;
                 }
                 this.$emit('onSure', {

@@ -18,6 +18,7 @@
         <add-window v-if="showAdd" @onCancle="onCancle" @onSure="onAdd" :data="windowData"></add-window>
         <add-column-window v-if="showColumnAdd" @onCancle="onColumnCancle" @onSure="onColumnSure" :data="windowColumnData"></add-column-window>
         <add-summary-window v-if="showSummaryAdd" @onCancle="onSummaryCancel" @onSure="onSummarySure" :data="windowSummaryData"></add-summary-window>
+        <confirm-window v-if="showConfirm" :confirmType="confirmType" :index="confirmIndex" :id="confirmId" @onSure="onConfirmSure" @onCancle="onConfirmCancel"></confirm-window>
     </div>
 </template>
 <script>
@@ -27,6 +28,7 @@ import ItemList from 'components/list/weekly-column-item';
 import AddWindow from 'components/window/add-weekly';
 import AddColumnWindow from 'components/window/add-weekly-column';
 import addSummaryWindow from 'components/window/add-weekly-summary';
+import confirmWindow from 'components/window/weekly-confirm';
 import { mapState } from 'vuex';
 import { parseQueryString } from 'utils/common';
 import apiConfig from 'utils/apiConfig';
@@ -42,10 +44,14 @@ export default {
             windowColumnData: {},
             columnEditIndex: 0,
             showSummaryAdd: false,
-            windowSummaryData: {}
+            showConfirm: false,
+            windowSummaryData: {},
+            confirmType: 1, // 1 表示栏目 2 表示文章
+            confirmIndex: 0,
+            confirmId: ''
         };
     },
-    components: { Sidebar, ItemList, AddWindow, AddColumnWindow, addSummaryWindow },
+    components: { Sidebar, ItemList, AddWindow, AddColumnWindow, addSummaryWindow, confirmWindow },
     created () {
         this.$store.dispatch('setUserInfo').then(res => {
             if (res.code !== '0000' || !res.data._id) {
@@ -53,7 +59,7 @@ export default {
                 window.location.href = './login.html';
             } else {
                 if (res.data.role !== '1') {
-                    alert('权限不够');
+                    this.$Message.error('权限不够');
                 } else {
                     const query = parseQueryString();
                     this.$store.dispatch('queryWeeklyDetail', query);
@@ -134,16 +140,9 @@ export default {
             this.$store.dispatch('saveOrUpdate', obj);
         },
         articleDelete (id) {
-            const articles = this.detail.columns[this.selectColumn].articles;
-            const index = articles.findIndex(item => {
-                return id === item._id;
-            });
-            // 从数组中移除
-            articles.splice(index, 1);
-            const obj = {
-                data: JSON.stringify(this.detail)
-            };
-            this.$store.dispatch('saveOrUpdate', obj);
+            this.confirmId = id;
+            this.confirmType = 2;
+            this.showConfirm = true;
         },
         articleEdit (id) {
             const articles = this.detail.columns[this.selectColumn].articles;
@@ -189,32 +188,21 @@ export default {
             this.showColumnAdd = false;
         },
         columnDelete (index) {
-            const columns = this.detail.columns;
-            if (columns.length === 1) {
-                alert('至少保持一个栏目');
-                return;
-            }
-            columns.splice(index, 1);
-            const obj = {
-                data: JSON.stringify(this.detail)
-            };
-            this.$store.dispatch('saveOrUpdate', obj);
-            if (index === columns.length) {
-                index = index - 1;
-            }
-            this.$store.dispatch('setColumnEditIndex', index);
+            this.confirmIndex = index;
+            this.confirmType = 1;
+            this.showConfirm = true;
         },
         publish () {
             if (!this.detail._id) {
-                alert('请添加文章再发布');
+                this.$Message.error('请添加文章再发布');
             } else if (!this.detail.summary) {
-                alert('请输入本期概要');
+                this.$Message.error('请输入本期概要');
             } else {
                 this.$store.dispatch('publishWeekly', this.detail._id).then(res => {
                     if (res.code === '0000') {
                         location.href = './weekly.html';
                     } else {
-                        alert(res.msg);
+                        this.$Message.error(res.msg);
                     }
                 });
             }
@@ -223,15 +211,70 @@ export default {
             if (this.detail._id) {
                 location.href = `./weekly.html#/detail/${this.detail._id}`;
             } else {
-                alert('请添加文章');
+                this.$Message.error('请添加文章');
             }
         },
         download () {
             if (this.detail._id) {
                 location.href = apiConfig.downloadWeekly() + `?num=${this.detail.num}`;
             } else {
-                alert('请先添加文章');
+                this.$Message.error('请先添加文章');
             }
+        },
+        onConfirmCancel () {
+            this.showConfirm = false;
+        },
+        onConfirmSure ({ confirmType, index, id }) {
+            this.showConfirm = false;
+            // 删除栏目
+            if (confirmType === 1) {
+                const columns = this.detail.columns;
+                if (columns.length === 1) {
+                    this.$Message.error('至少保持一个栏目');
+                    return;
+                }
+                columns.splice(index, 1);
+                const obj = {
+                    data: JSON.stringify(this.detail)
+                };
+                this.$store.dispatch('saveOrUpdate', obj);
+                if (index === columns.length) {
+                    index = index - 1;
+                }
+                this.$store.dispatch('setColumnEditIndex', index);
+            } else {
+                const articles = this.detail.columns[this.selectColumn].articles;
+                const aindex = articles.findIndex(item => {
+                    return id === item._id;
+                });
+                // 从数组中移除
+                articles.splice(aindex, 1);
+                const obj = {
+                    data: JSON.stringify(this.detail)
+                };
+                this.$store.dispatch('saveOrUpdate', obj);
+            }
+        },
+        toggleHtmlClass (v) {
+            if (v) {
+                document.getElementsByTagName('body')[0].className = 'noscroll';
+            } else {
+                document.getElementsByTagName('body')[0].className = '';
+            }
+        }
+    },
+    watch: {
+        showColumnAdd (v) {
+            this.toggleHtmlClass(v);
+        },
+        showSummaryAdd (v) {
+            this.toggleHtmlClass(v);
+        },
+        showAdd (v) {
+            this.toggleHtmlClass(v);
+        },
+        showConfirm (v) {
+            this.toggleHtmlClass(v);
         }
     }
 };

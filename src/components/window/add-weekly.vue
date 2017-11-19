@@ -51,22 +51,22 @@
             onSure () {
                 const title = this.$refs.title.value;
                 if (!title || title === '') {
-                    alert('请输入标题');
+                    this.$Message.error('请输入标题');
                     return;
                 }
                 const url = this.$refs.url.value;
                 if (!url || url === '') {
-                    alert('请输入链接');
+                    this.$Message.error('请输入链接');
                     return;
                 }
                 const author = this.$refs.author.value;
                 if (!author || author === '') {
-                    alert('请输入作者');
+                    this.$Message.error('请输入作者');
                     return;
                 }
                 const summary = this.$refs.summary.value;
                 if (!summary || summary === '') {
-                    alert('请输入概述');
+                    this.$Message.error('请输入概述');
                     return;
                 }
                 this.$emit('onSure', {
