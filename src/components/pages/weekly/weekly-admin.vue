@@ -200,7 +200,7 @@ export default {
             } else {
                 this.$store.dispatch('publishWeekly', this.detail._id).then(res => {
                     if (res.code === '0000') {
-                        location.href = './weekly.html';
+                        location.href = './index.html';
                     } else {
                         this.$Message.error(res.msg);
                     }
@@ -209,7 +209,7 @@ export default {
         },
         preLook () {
             if (this.detail._id) {
-                location.href = `./weekly.html#/detail/${this.detail._id}`;
+                location.href = `./index.html#/detail/${this.detail._id}`;
             } else {
                 this.$Message.error('请添加文章');
             }

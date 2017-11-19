@@ -47,7 +47,7 @@
         },
         methods: {
             toHome () {
-                location.href = './weekly.html';
+                location.href = './index.html';
             },
             preLook () {
                 this.$emit('preLook');
