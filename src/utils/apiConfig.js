@@ -30,7 +30,8 @@ let urls = {
         queryWeeklyDetail: '/weekly/findById',
         saveOrUpdateWeeklyApi: '/weekly/admin/saveOrUpdate',
         queryUnPub: '/weekly/admin/findUnPub',
-        publishWeekly: '/weekly/admin/publish'
+        publishWeekly: '/weekly/admin/publish',
+        downloadWeekly: '/weekly/admin/download'
     }
 };
 

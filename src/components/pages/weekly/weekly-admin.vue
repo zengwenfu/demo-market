@@ -1,6 +1,6 @@
 <template>
     <div class="weekly-admin-wrap">
-        <weekly-titlebar :needActions="true" @publish="publish" @preLook="preLook"></weekly-titlebar>
+        <weekly-titlebar :needActions="true" @publish="publish" @preLook="preLook" @download="download"></weekly-titlebar>
         <div class="home body-wrap wrap">
             <div class="body-inner inner flex-container flex-direction-row">
                 <sidebar @columnClick="columnClick" @summaryClick="summaryClick" @addClick="columnAdd" @editClick="columnEdit" @deleteClick="columnDelete"></sidebar>
@@ -29,6 +29,7 @@ import AddColumnWindow from 'components/window/add-weekly-column';
 import addSummaryWindow from 'components/window/add-weekly-summary';
 import { mapState } from 'vuex';
 import { parseQueryString } from 'utils/common';
+import apiConfig from 'utils/apiConfig';
 
 export default {
     data () {
@@ -223,6 +224,13 @@ export default {
                 location.href = `./weekly.html#/detail/${this.detail._id}`;
             } else {
                 alert('请添加文章');
+            }
+        },
+        download () {
+            if (this.detail._id) {
+                location.href = apiConfig.downloadWeekly() + `?num=${this.detail.num}`;
+            } else {
+                alert('请先添加文章');
             }
         }
     }
