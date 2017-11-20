@@ -8,7 +8,7 @@
                     <form method="post" id="register_form">
                         <ul>
                             <li>
-                                <input type="text" class="form_control" ref="email" id="eamil" name="eamil" placeholder="邮箱">
+                                <input type="text" class="form_control" ref="email" id="eamil" name="email" placeholder="邮箱">
                             </li>
                             <li>
                                 <input type="password" class="form_control" ref="pass" id="password" name="password" placeholder="密码">
@@ -27,15 +27,40 @@
 
 import request from 'utils/request.js';
 import apiConfig from 'utils/apiConfig.js';
+import Validator from 'utils/validator';
+const validatorFunc = (form) => {
+    const validator = new Validator();
+    validator.add(form.email, [{
+        strategy: 'isNonEmpty',
+        errorMsg: '邮箱地址不能为空！'
+    }, {
+        strategy: 'isEmail',
+        errorMsg: '邮箱地址格式不正确！'
+    }]);
+    validator.add(form.password, [{
+        strategy: 'isNonEmpty',
+        errorMsg: '密码不能为空！'
+    }, {
+        strategy: 'minLength:6',
+        errorMsg: '密码为6-20位数字字母组合'
+    }]);
+    const errorMsg = validator.start();
+    return errorMsg;
+};
 export default {
     name: 'register',
     methods: {
         async login () {
+            const form = document.getElementById('register_form');
+            const errorMsg = validatorFunc(form);
+            if (errorMsg) {
+                this.$Message.error(errorMsg);
+                return;
+            }
             const res = await this.registerMessage();
             if (res.code !== '0000') {
                 this.$Message.error(res.msg);
             } else {
-                this.$Message.error(localStorage.fromUrl);
                 if (localStorage.fromUrl) {
                     location.href = localStorage.fromUrl;
                 } else {
