@@ -87,23 +87,23 @@ export default {
         onCancle () {
             this.showAdd = false;
         },
+        saveOrUpdate () {
+            const obj = {
+                data: encodeURIComponent(JSON.stringify(this.detail))
+            };
+            this.$store.dispatch('saveOrUpdate', obj);
+        },
         onAdd (data) {
             if (!data.id) {
                 this.detail.columns[this.selectColumn].articles.push(data);
-                const obj = {
-                    data: JSON.stringify(this.detail)
-                };
-                this.$store.dispatch('saveOrUpdate', obj);
+                this.saveOrUpdate();
             } else {
                 const articles = this.detail.columns[this.selectColumn].articles;
                 const index = articles.findIndex(item => {
                     return data.id === item._id;
                 });
                 articles[index] = data;
-                const obj = {
-                    data: JSON.stringify(this.detail)
-                };
-                this.$store.dispatch('saveOrUpdate', obj);
+                this.saveOrUpdate();
             }
             this.showAdd = false;
         },
@@ -134,10 +134,7 @@ export default {
         onSummarySure ({ summary }) {
             this.detail.summary = summary;
             this.showSummaryAdd = false;
-            const obj = {
-                data: JSON.stringify(this.detail)
-            };
-            this.$store.dispatch('saveOrUpdate', obj);
+            this.saveOrUpdate();
         },
         articleDelete (id) {
             this.confirmId = id;
@@ -181,10 +178,7 @@ export default {
                 columns.splice(this.columnEditIndex + 1, 0, newColumn);
                 this.$store.dispatch('setColumnEditIndex', this.columnEditIndex + 1);
             }
-            const obj = {
-                data: JSON.stringify(this.detail)
-            };
-            this.$store.dispatch('saveOrUpdate', obj);
+            this.saveOrUpdate();
             this.showColumnAdd = false;
         },
         columnDelete (index) {
@@ -234,10 +228,7 @@ export default {
                     return;
                 }
                 columns.splice(index, 1);
-                const obj = {
-                    data: JSON.stringify(this.detail)
-                };
-                this.$store.dispatch('saveOrUpdate', obj);
+                this.saveOrUpdate();
                 if (index === columns.length) {
                     index = index - 1;
                 }
@@ -249,10 +240,7 @@ export default {
                 });
                 // 从数组中移除
                 articles.splice(aindex, 1);
-                const obj = {
-                    data: JSON.stringify(this.detail)
-                };
-                this.$store.dispatch('saveOrUpdate', obj);
+                this.saveOrUpdate();
             }
         },
         toggleHtmlClass (v) {
