@@ -71,7 +71,7 @@
                 }
                 this.$emit('onSure', {
                     title,
-                    url,
+                    url: encodeURIComponent(url),
                     author,
                     summary,
                     id: this.data._id
