@@ -1,7 +1,7 @@
 import 'css/common.less';
 import mainTitlebar from 'components/titlebar/main-titlebar.vue';
 import weeklyTitlebar from 'components/titlebar/weekly-titlebar.vue';
-import Message from './common/message/index';
+import Message from './components/message/index';
 
 const Vue = window.Vue || {};
 Vue.prototype.$Message = Message;

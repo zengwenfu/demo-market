@@ -13,6 +13,11 @@
 4. localhost:3000/app.html
 
 
+## npm start 模式
+此模式采用了 proxy 反向代理，按以下步骤运行
+* `npm run proxy` 具体可以看下 apiConfig.js 文件的前几行
+* `npm start`
+
 ## 目录说明
 ```
 |-- dist                         --------编译输出目录
