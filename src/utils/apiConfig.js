@@ -1,7 +1,8 @@
 const host = {
     'dev': 'http://localhost:3000/mock',
     'stg': 'http://localhost:5001',
-    'production': 'http://dm.facemagic888.com'
+    'production': 'http://dm.facemagic888.com',
+    'proxy': '/user'
 }[ENV];
 
 const concatUrl = (url) => `${host}${url}`;

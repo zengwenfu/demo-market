@@ -8,7 +8,7 @@
                     <form method="post" id="register_form">
                         <ul>
                             <li>
-                                <input type="text" class="form_control" id="name" ref="username" name="name" placeholder="用户名">
+                                <input type="text" class="form_control" id="name" ref="username" name="name" placeholder="昵称">
                             </li>
                             <li>
                                 <input type="text" class="form_control" ref="email" id="eamil" name="email" placeholder="邮箱">
@@ -41,9 +41,6 @@ const validatorFunc = (form) => {
     validator.add(form.name, [{
         strategy: 'isNonEmpty',
         errorMsg: '用户名不能为空！'
-    }, {
-        strategy: 'minLength:6',
-        errorMsg: '用户名长度不能小于6位！'
     }]);
     validator.add(form.password, [{
         strategy: 'isNonEmpty',
